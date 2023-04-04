@@ -1,0 +1,21 @@
+.list-item {
+  width: 99%;
+  min-height: 40px;
+  box-shadow: 0 0 5px 2px #e5e5e5;
+  float: left;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.zoom {
+  transition: transform .2s;
+}
+
+.zoom:hover {
+  transform: scale(1.02);
+}
+
+.create-group {
+  width: 95%;
+  min-height: 40px;
+}

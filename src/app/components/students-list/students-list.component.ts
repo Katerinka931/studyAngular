@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StudentServiceService} from "../../services/student-service/student-service.service";
 import {Student} from '../../classes/Student'
+import {students} from "../../students";
 
 
 @Component({
@@ -10,19 +11,30 @@ import {Student} from '../../classes/Student'
 })
 export class StudentsListComponent implements OnInit {
 
-  students: Array<Student> = [];
+  students = students;
   constructor(private studentService: StudentServiceService) {
   }
 
   ngOnInit(): void {
-    this.createStudents();
   }
 
-  createStudents() {
-    let student1 = new Student(1, 'Ivan', new Date("2009-05-27"), 1);
-    let student2 = new Student(2, 'Elena', new Date("1909-05-27"), 2);
-    let student3 = new Student(3, 'George', new Date("1999-05-27"), 3);
+  updateStudent(id: number) {
 
-    this.students = [student1, student2, student3];
+  }
+
+  deleteStudent(id: number) {
+
+  }
+
+  createStudent() {
+
   }
 }
+
+// createStudents() {
+//   let student1 = new Student(1, 'Ivan', new Date("2009-05-27"), 1);
+//   let student2 = new Student(2, 'Elena', new Date("1909-05-27"), 2);
+//   let student3 = new Student(3, 'George', new Date("1999-05-27"), 3);
+//
+//   this.students = [student1, student2, student3];
+// }

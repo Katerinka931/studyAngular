@@ -1,1 +1,20 @@
-<p>groups-list works!</p>
+<div style="margin-bottom: 150px">
+  <br/>
+  <h2 class="text-center">Список групп</h2>
+  <br/>
+  <div *ngFor="let group of groups; let i = index" style="margin-bottom: 10px" (click)="openGroup(group.id)">
+    <div class="list-group-item list-item zoom">
+      <div style="margin: 10px 10px">
+        {{group.name}}
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div>
+  <h2 class="text-center" style="margin-top: 50px">Создайте группу</h2>
+  <br/>
+  <input class="create-group" type="text" id="name" placeholder="Номер группы"/>
+  <button class="btn btn-outline-success" style="margin-bottom: 7px; margin-left: 1%" (click)="createGroup()"> +
+  </button>
+</div>

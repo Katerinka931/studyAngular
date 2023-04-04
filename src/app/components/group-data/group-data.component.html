@@ -1,0 +1,42 @@
+<br/>
+<div style="margin-bottom: 50px;">
+  <h2 class="text-center">Группа {{group.name}}</h2> <br/>
+  <input style="width: 90%; min-height: 40px; margin-left: 1%" type="text" id="group_name" value="{{group.name}}"/>
+  <button class="btn btn-outline-success" style="float: right; margin-left: 1%"
+          (click)="updateGroup(group.id!)">
+    ✏
+  </button>
+  <h2 class="text-center">
+    <button class="btn btn-danger" (click)="deleteGroup()">
+      Удалить группу
+    </button>
+  </h2>
+</div>
+<h2 class="text-center">Студенты</h2>
+<br/>
+<div *ngIf="isStudents; else noStudents">
+  <div *ngFor="let student of group.students; let i = index" style="margin-bottom: 10px">
+    <input class="item" type="text" id="name{{student.id}}" value="{{student.name}}"/>
+    <input class="item" type="date" id="date{{student.id}}" value="{{student.birthdate | date:'yyyy-MM-dd'}}"/>
+    <input class="item" type="text" id="number{{student.id}}" value="{{student.num}}"/>
+    <button class="btn btn-outline-success" style="float: right; margin-left: 1%"
+            (click)="updateStudent(student.id!)">
+      ✏
+    </button>
+    <button class="btn btn-outline-danger" style="float: right;" (click)="deleteStudent(student.id!)"> –
+    </button>
+  </div>
+</div>
+<ng-template #noStudents>
+  <h5>Студентов в группе нет, создайте первого студента!</h5>
+</ng-template>
+<br/>
+<div>
+  <h2 class="text-center" style="margin-top: 150px">Создайте студента</h2>
+  <input class="item" type="text" id="name" placeholder="Имя"/>
+  <input class="item" type="date" id="date"/>
+  <input class="item" type="text" id="number" placeholder="Номер"/>
+  <button class="btn btn-outline-success" style="float: right; margin-left: 1%" (click)="createStudent()"> +
+  </button>
+</div>
+
