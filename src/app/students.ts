@@ -5,7 +5,7 @@ export interface Student {
   num: number;
 }
 
-export const students = [
+export let students = [
   {
     id: 1,
     name: 'Ivan',

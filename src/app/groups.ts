@@ -6,7 +6,7 @@ export interface Group {
   students: Student[];
 }
 
-export const groups = [
+export let groups = [
   {
     id: 1,
     name: '6402',

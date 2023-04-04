@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupServiceService} from "../../services/group-service/group-service.service";
 import {StudentServiceService} from "../../services/student-service/student-service.service";
-import {Group} from "../../classes/Group";
-import {Student} from "../../classes/Student";
 import {groups} from "../../groups";
 import {Router} from "@angular/router";
 
@@ -14,6 +12,7 @@ import {Router} from "@angular/router";
 export class GroupsListComponent implements OnInit {
 
   groups = groups;
+  seq = groups.length + 1;
 
   constructor(private groupService: GroupServiceService, private studentService: StudentServiceService, private router: Router) {
   }
@@ -26,7 +25,9 @@ export class GroupsListComponent implements OnInit {
   }
 
   createGroup() {
-
+    let name = document.getElementById("name") as HTMLInputElement;
+    this.groups.push({id: this.seq, name: name.value, students: []})
+    this.seq += 1;
   }
 }
 

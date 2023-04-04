@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {StudentServiceService} from "../../services/student-service/student-service.service";
-import {Student} from '../../classes/Student'
 import {students} from "../../students";
 
 
@@ -12,22 +11,37 @@ import {students} from "../../students";
 export class StudentsListComponent implements OnInit {
 
   students = students;
+  seq = students.length + 1;
+
   constructor(private studentService: StudentServiceService) {
   }
 
   ngOnInit(): void {
   }
 
-  updateStudent(id: number) {
+  updateStudent(id: number) { // todo добавить редактирование по группе
+    let name = document.getElementById("name" + id) as HTMLInputElement;
+    let birthdate = document.getElementById("date" + id) as HTMLInputElement;
+    let num = document.getElementById("number" + id) as HTMLInputElement;
 
+    this.students.forEach((item, index)=>{
+      if (item.id == id) this.students.splice(index, 1, {id: id, name: name.value, birthdate: new Date(birthdate.value), num: Number(num.value)});
+    })
   }
 
   deleteStudent(id: number) {
-
+    this.students.forEach((item, index)=>{
+      if (item.id == id) this.students.splice(index, 1);
+    })
   }
 
   createStudent() {
+    let name = document.getElementById("name") as HTMLInputElement;
+    let birthdate = document.getElementById("date") as HTMLInputElement;
+    let num = document.getElementById("number") as HTMLInputElement;
 
+    this.students.push({id: this.seq, name: name.value, birthdate: new Date(birthdate.value), num: Number(num.value)})
+    this.seq += 1;
   }
 }
 
