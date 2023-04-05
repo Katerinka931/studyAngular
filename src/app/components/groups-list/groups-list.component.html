@@ -1,16 +1,3 @@
-<div style="margin-bottom: 150px">
-  <br/>
-  <h2 class="text-center">Список групп</h2>
-  <br/>
-  <div *ngFor="let group of groups; let i = index" style="margin-bottom: 10px" (click)="openGroup(group.id)">
-    <div class="list-group-item list-item zoom">
-      <div style="margin: 10px 10px">
-        {{group.name}}
-      </div>
-    </div>
-  </div>
-</div>
-<br/>
 <div>
   <h2 class="text-center" style="margin-top: 50px">Создайте группу</h2>
   <br/>
@@ -18,3 +5,22 @@
   <button class="btn btn-outline-success" style="margin-bottom: 7px; margin-left: 1%" (click)="createGroup()"> +
   </button>
 </div>
+<div style="margin-bottom: 150px">
+  <br/>
+  <h2 class="text-center">Список групп</h2>
+  <br/>
+  <div *ngFor="let group of groups; let i = index" style="margin-bottom: 10px" >
+    <div class="list-group-item list-item zoom" (click)="openGroup(group.id!)">
+      <div style="margin: 10px 10px">
+        {{group.name}}
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-danger" style="min-height: 40px; float: left; margin-left: 25px" (click)="deleteGroup(group.id!)">
+        Удалить группу
+      </button>
+    </div>
+  </div>
+</div>
+<br/>
+

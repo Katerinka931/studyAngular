@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { StudentsListComponent } from './components/students-list/students-list.component';
 import { GroupsListComponent } from './components/groups-list/groups-list.component';
 import { GroupDataComponent } from './components/group-data/group-data.component';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { GroupDataComponent } from './components/group-data/group-data.component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

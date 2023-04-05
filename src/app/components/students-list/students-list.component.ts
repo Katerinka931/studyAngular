@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {StudentServiceService} from "../../services/student-service/student-service.service";
-import {students} from "../../students";
-
+import {Student} from "../../models/student/student";
 
 @Component({
   selector: 'app-students-list',
@@ -10,13 +9,23 @@ import {students} from "../../students";
 })
 export class StudentsListComponent implements OnInit {
 
-  students = students;
-  seq = students.length + 1;
+  students?: Student[];
 
   constructor(private studentService: StudentServiceService) {
   }
 
   ngOnInit(): void {
+    this.retrieve();
+  }
+
+  retrieve() {
+    this.studentService.getAll().subscribe({
+      next: (data) => {
+        this.students = data;
+      }, error: (e) => {
+        console.log(e);
+      }
+    });
   }
 
   updateStudent(id: number) { // todo добавить редактирование по группе
@@ -24,15 +33,17 @@ export class StudentsListComponent implements OnInit {
     let birthdate = document.getElementById("date" + id) as HTMLInputElement;
     let num = document.getElementById("number" + id) as HTMLInputElement;
 
-    this.students.forEach((item, index)=>{
-      if (item.id == id) this.students.splice(index, 1, {id: id, name: name.value, birthdate: new Date(birthdate.value), num: Number(num.value)});
-    })
+    const data = {
+      name: name.value,
+      birthdate: birthdate.value,
+      number: num.value
+    }
+
+    // this.studentService.updateStudent(id, data);
   }
 
   deleteStudent(id: number) {
-    this.students.forEach((item, index)=>{
-      if (item.id == id) this.students.splice(index, 1);
-    })
+    this.studentService.delete(id);
   }
 
   createStudent() {
@@ -40,15 +51,24 @@ export class StudentsListComponent implements OnInit {
     let birthdate = document.getElementById("date") as HTMLInputElement;
     let num = document.getElementById("number") as HTMLInputElement;
 
-    this.students.push({id: this.seq, name: name.value, birthdate: new Date(birthdate.value), num: Number(num.value)})
-    this.seq += 1;
+    const data = {
+      name: name.value,
+      number: num.value,
+      birthdate: birthdate.value
+    }
+
+    // this.studentService.createStudent(data);
+  }
+
+  search() {
+    let name = document.getElementById("search") as HTMLInputElement;
+
+    this.studentService.search(name.value).subscribe({
+      next: (data) => {
+        this.students = data;
+      }, error: (e) => {
+        console.log(e);
+      }
+    });
   }
 }
-
-// createStudents() {
-//   let student1 = new Student(1, 'Ivan', new Date("2009-05-27"), 1);
-//   let student2 = new Student(2, 'Elena', new Date("1909-05-27"), 2);
-//   let student3 = new Student(3, 'George', new Date("1999-05-27"), 3);
-//
-//   this.students = [student1, student2, student3];
-// }
