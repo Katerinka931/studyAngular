@@ -5,7 +5,7 @@ import {StudentsListComponent} from "./components/students-list/students-list.co
 import {GroupDataComponent} from "./components/group-data/group-data.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: 'api/groups', pathMatch: 'full' },
+  {path: '', redirectTo: 'api/students', pathMatch: 'full' },
   {path: 'api/students', component: StudentsListComponent},
   {path: 'api/groups', component: GroupsListComponent},
   {path: 'api/groups/:group', component: GroupDataComponent},
