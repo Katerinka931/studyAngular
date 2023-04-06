@@ -6,31 +6,30 @@
           (click)="updateGroup(group.id!)">
     💾
   </button>
-<!--  <h2 class="text-center">-->
-<!--    <button class="btn btn-danger" (click)="deleteGroup()">-->
-<!--      Удалить группу-->
-<!--    </button>-->
-<!--  </h2>-->
 </div>
 
-<!--<h2 class="text-center">Студенты</h2>-->
-<!--<br/>-->
-<!--<div *ngIf="isStudents; else noStudents">-->
-<!--  <div *ngFor="let student of group.students; let i = index" style="margin-bottom: 10px">-->
-<!--    <input class="item" type="text" id="name{{student.id}}" value="{{student.name}}"/>-->
-<!--    <input class="item" type="date" id="date{{student.id}}" value="{{student.birthdate | date:'yyyy-MM-dd'}}"/>-->
-<!--    <input class="item" type="text" id="number{{student.id}}" value="{{student.num}}"/>-->
-<!--    <button class="btn btn-outline-success" style="float: right; margin-left: 1%"-->
-<!--            (click)="updateStudent(student.id!)">-->
-<!--      ✏-->
-<!--    </button>-->
-<!--    <button class="btn btn-outline-danger" style="float: right;" (click)="deleteStudent(student.id!)"> –-->
-<!--    </button>-->
-<!--  </div>-->
-<!--</div>-->
-<!--<ng-template #noStudents>-->
-<!--  <h5>Студентов в группе нет, создайте первого студента!</h5>-->
-<!--</ng-template>-->
+<h2 class="text-center">Студенты</h2>
+<br/>
+<div *ngIf="isStudents; else noStudents">
+  <div *ngFor="let student of group.students; let i = index" style="margin-bottom: 10px">
+      <div class="list-group-item list-item">
+        <div style="margin: 10px 10px" class="row align-items-start">
+          <div class="col">
+            Имя: {{student.name | titlecase}}
+          </div>
+          <div class="col">
+            Дата рождения: {{student.birthdate| date:'yyyy-MM-dd'}}
+          </div>
+          <div class="col">
+            Номер: {{student.number}}
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<ng-template #noStudents>
+  <h5>Студентов в группе нет, создайте первого студента!</h5>
+</ng-template>
 <!--<br/>-->
 <!--<div>-->
 <!--  <h2 class="text-center" style="margin-top: 150px">Создайте студента</h2>-->

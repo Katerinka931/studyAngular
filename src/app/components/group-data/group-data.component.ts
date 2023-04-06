@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GroupServiceService} from "../../services/group-service/group-service.service";
 import {Group} from "../../models/group/group";
+import {Student} from "../../models/student/student";
 
 @Component({
   selector: 'app-group-data',
@@ -11,6 +12,8 @@ import {Group} from "../../models/group/group";
 export class GroupDataComponent implements OnInit {
 
   group: Group = {};
+  students: Student[] = [];
+  isStudents: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private groupService: GroupServiceService) {
   }
@@ -24,6 +27,8 @@ export class GroupDataComponent implements OnInit {
     this.groupService.getGroup(id).subscribe({
         next: (data) => {
           this.group = data;
+          this.students = data['students']!;
+          this.isStudents = this.students.length != 0;
         }, error: (e) => {
           console.log(e);
           confirm('Ошибка сервера \nСтатус ошибки ' + e.status)
@@ -39,9 +44,10 @@ export class GroupDataComponent implements OnInit {
     this.groupService.updateGroup(id, data).subscribe({
       next: (data) => {
         this.group = data;
+        confirm('Сохранение успешно')
       }, error: (e) => {
         console.log(e);
-        confirm('Ошибка сервера \nСтатус ошибки ' + e.status)
+        confirm('Такая группа уже существует')
       }
     });
   }

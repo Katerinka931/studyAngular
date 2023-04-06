@@ -1,15 +1,6 @@
 <br/>
-<!--<div>-->
-<!--  <h2 class="text-center">Поиск по имени</h2>-->
-<!--  <input style="width: 90%" type="text" id="search"/>-->
-<!--  <button class="btn btn-outline-secondary bi bi-search" style="float: right; margin-left: 1%" (click)="search()">-->
-<!--    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">-->
-<!--      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>-->
-<!--    </svg>-->
-<!--  </button>-->
-<!--</div>-->
 <div class="input-group mb-3">
-  <input type="text" class="form-control" id="search" placeholder="Имя получателя" #reference>
+  <input type="text" class="form-control" id="search" placeholder="Имя студента" #reference>
   <div class="input-group-append">
     <span class="input-group-text btn" (click)="search()">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
@@ -18,36 +9,59 @@
               d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
           </svg>
     </span>
-    <span class="input-group-text btn" (click)="retrieve(); reference.value=''" >
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+    <span class="input-group-text btn" (click)="reset(); reference.value=''">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+         viewBox="0 0 16 16">
+  <path
+    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
 </svg>
     </span>
   </div>
 </div>
 
-<br/><br/>
+<br/>
 <div>
   <h2 class="text-center">Создайте студента</h2>
   <input class="item" type="text" id="name" placeholder="Имя"/>
   <input class="item" type="date" id="date"/>
   <input class="item" type="text" id="number" placeholder="Номер"/>
+  <select class="item" id="group" [value]="">
+    <option *ngFor="let type of groups" [value]="type.name">
+      {{ type.name }}
+    </option>
+  </select>
   <button class="btn btn-outline-success" style="float: right; margin-left: 1%" (click)="createStudent()"> +
   </button>
 </div>
 
 <br/>
 <h2 class="text-center" style="margin-top: 50px">Список студентов</h2>
-<div *ngFor="let student of students; let i = index" style="margin-bottom: 10px">
-  <input class="item" type="text" id="name{{student.id}}" value="{{student.name}}"/>
-  <input class="item" type="date" id="date{{student.id}}" value="{{student.birthdate | date:'yyyy-MM-dd'}}"/>
-  <input class="item" type="text" id="number{{student.id}}" value="{{student.number}}"/>
-  <button class="btn btn-outline-info" style="float: right; margin-left: 1%"
-          (click)="updateStudent(student.id!)">
-    💾
-  </button>
-  <button class="btn btn-outline-danger" style="float: right;" (click)="deleteStudent(student.id!)"> –
-  </button>
+<div *ngIf="isStudents; else noStudents">
+  <div *ngFor="let student of students; let i = index" style="margin-bottom: 10px">
+    <input class="item" type="text" id="name{{student.id}}" value="{{student.name}}" disabled/>
+    <input class="item" type="date" id="date{{student.id}}" value="{{student.birthdate | date:'yyyy-MM-dd'}}" disabled/>
+    <input class="item" type="text" id="number{{student.id}}" value="{{student.number}}" disabled/>
+    <select class="item" id="group{{student.id}}" disabled [value]="student.selectedGroup!.name">
+      <option *ngFor="let type of groups"
+              [value]="type.name" [selected]="type.name == student.selectedGroup!.name">
+        {{ type.name }}
+      </option>
+    </select>
+    <button class="btn btn-outline-info" style="float: right; margin-left: 1%"
+            (click)="enableEdit(student.id!)" id="edit{{student.id}}">
+      ✏️
+    </button>
+    <button class="btn btn-outline-success" style="float: right; margin-left: 1%" id="save{{student.id}}"
+            (click)="updateStudent(student.id!)" hidden="hidden">
+      💾
+    </button>
+    <button class="btn btn-outline-danger" style="float: right;" (click)="deleteStudent(student.id!)"> –
+    </button>
+    <br/><br/>
+  </div>
 </div>
+<ng-template #noStudents>
+  <h4 class="text-center">Студенты не найдены. Создайте первого или измените поисковой запрос</h4>
+</ng-template>
 <br/><br/>
 

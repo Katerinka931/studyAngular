@@ -9,18 +9,23 @@
   <br/>
   <h2 class="text-center">Список групп</h2>
   <br/>
-  <div *ngFor="let group of groups; let i = index" style="margin-bottom: 10px" >
-    <div class="list-group-item list-item zoom" (click)="openGroup(group.id!)">
-      <div style="margin: 10px 10px">
-        {{group.name}}
+  <div *ngIf="isGroups; else noGroups">
+    <div *ngFor="let group of groups; let i = index" style="margin-bottom: 10px" >
+      <div class="list-group-item list-item zoom" (click)="openGroup(group.id!)">
+        <div style="margin: 10px 10px">
+          {{group.name}}
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-danger" style="min-height: 40px; float: left; margin-left: 25px" (click)="deleteGroup(group.id!)">
+          Удалить группу
+        </button>
       </div>
     </div>
-    <div class="text-center">
-      <button class="btn btn-danger" style="min-height: 40px; float: left; margin-left: 25px" (click)="deleteGroup(group.id!)">
-        Удалить группу
-      </button>
-    </div>
   </div>
+  <ng-template #noGroups>
+    <h4 class="text-center">Групп еще нет, создайте первую!</h4>
+  </ng-template>
 </div>
 <br/>
 

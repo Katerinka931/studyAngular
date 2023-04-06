@@ -11,6 +11,7 @@ import {Group} from "../../models/group/group";
 export class GroupsListComponent implements OnInit {
   group: Group = {};
   groups: Group[] = [];
+  isGroups: boolean = false;
 
   constructor(private groupService: GroupServiceService, private router: Router) {
   }
@@ -23,6 +24,7 @@ export class GroupsListComponent implements OnInit {
     this.groupService.getAllGroups().subscribe({
       next: data => {
         this.groups = data;
+        this.isGroups = this.groups.length != 0;
       }, error(e) {
         console.log(e)
       }
@@ -39,22 +41,24 @@ export class GroupsListComponent implements OnInit {
       name: name.value.toLowerCase()
     };
     this.groupService.createGroup(data).subscribe({
-      next: (res) => {
+      next: () => {
         this.retrieve();
       },
-      error: (e) => {
-        console.error(e);
+      error: () => {
+        confirm('Группа с таким номером уже существует')
       }
     });
   }
 
   deleteGroup(id: number) {
     this.groupService.delete(id).subscribe({
-      next: (res) => {
+      next: () => {
         this.retrieve();
+        confirm('Группа удалена')
       },
       error: (e) => {
         console.error(e);
+        confirm('Удаление не удалось')
       }
     });
   }

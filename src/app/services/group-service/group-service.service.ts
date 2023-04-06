@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Group} from "../../models/group/group";
 import {environment} from "../../../environments/environment";
+import {Student} from "../../models/student/student";
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,11 @@ export class GroupServiceService {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  getNavigateUrl(id: number): string {
-    return this.baseUrl + '/' + id;
+  updateStudent(group_id: number, id: number, data: Student) {
+    return this.http.put(`${this.baseUrl}/${group_id}/students/${id}`, data);
+  }
+
+  createStudent(group_id: number , data: Student) {
+    return this.http.post(`${this.baseUrl}/${group_id}/students`, data);
   }
 }

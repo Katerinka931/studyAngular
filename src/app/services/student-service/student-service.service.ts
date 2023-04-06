@@ -14,16 +14,8 @@ export class StudentServiceService {
     return this.http.get<Student[]>(this.baseUrl);
   }
 
-  updateStudent(id: number, data: Student) {
-
-  }
-
   delete(id: number) {
-
-  }
-
-  createStudent(data: Student) {
-
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
   search(value: string) {
