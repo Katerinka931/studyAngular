@@ -30,7 +30,6 @@ export class GroupDataComponent implements OnInit {
           this.students = data['students']!;
           this.isStudents = this.students.length != 0;
         }, error: (e) => {
-          console.log(e);
           confirm('Ошибка сервера \nСтатус ошибки ' + e.status)
         }
     });
@@ -43,7 +42,6 @@ export class GroupDataComponent implements OnInit {
         this.group = data;
         confirm('Сохранение успешно')
       }, error: (e) => {
-        console.log(e);
         confirm('Такая группа уже существует')
       }
     });

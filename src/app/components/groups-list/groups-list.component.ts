@@ -53,7 +53,6 @@ export class GroupsListComponent implements OnInit {
         confirm('Группа удалена')
       },
       error: (e) => {
-        console.error(e);
         confirm('Удаление не удалось')
       }
     });

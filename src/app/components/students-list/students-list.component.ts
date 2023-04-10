@@ -42,7 +42,6 @@ export class StudentsListComponent implements OnInit {
         this.students = data;
         this.isStudents = this.students.length != 0
       }, error: (e) => {
-        console.log(e);
       }
     });
   }
@@ -52,7 +51,6 @@ export class StudentsListComponent implements OnInit {
       next: data => {
         this.groups = data;
       }, error(e) {
-        console.log(e)
       }
     });
   }
@@ -105,7 +103,6 @@ export class StudentsListComponent implements OnInit {
         this.students = data;
         this.isStudents = this.students.length != 0
       }, error: (e) => {
-        console.log(e);
       }
     });
   }
