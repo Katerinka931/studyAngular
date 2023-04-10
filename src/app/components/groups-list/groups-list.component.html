@@ -1,7 +1,7 @@
 <div>
   <h2 class="text-center" style="margin-top: 50px">Создайте группу</h2>
   <br/>
-  <input class="create-group" type="text" id="name" placeholder="Номер группы"/>
+  <input class="create-group" type="text" [(ngModel)]="group.name" placeholder="Номер группы"/>
   <button class="btn btn-outline-success" style="margin-bottom: 7px; margin-left: 1%" (click)="createGroup()"> +
   </button>
 </div>

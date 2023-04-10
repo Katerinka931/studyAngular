@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {StudentServiceService} from "../../services/student-service/student-service.service";
-import {Student} from "../../models/student/student";
-import {Group} from "../../models/group/group";
 import {GroupServiceService} from "../../services/group-service/group-service.service";
+import {Student} from "../../models/Student";
+import {Group} from "../../models/Group";
 
 @Component({
   selector: 'app-students-list',
@@ -13,6 +13,14 @@ export class StudentsListComponent implements OnInit {
 
   students?: Student[];
   groups: Group[] = [];
+
+  created_student: Student = {
+    name: '',
+    birthdate: new Date(),
+    number: 0,
+    group_id: 0
+  };
+
   prev_id: number = 0;
   isStudents: boolean = false;
 
@@ -26,8 +34,6 @@ export class StudentsListComponent implements OnInit {
   reload() {
     this.getGroups();
     this.getStudents();
-
-    this.setSelectedGroup(this.students!);
   }
 
   getStudents() {
@@ -35,7 +41,6 @@ export class StudentsListComponent implements OnInit {
       next: (data) => {
         this.students = data;
         this.isStudents = this.students.length != 0
-        this.setSelectedGroup(this.students!);
       }, error: (e) => {
         console.log(e);
       }
@@ -46,7 +51,6 @@ export class StudentsListComponent implements OnInit {
     this.groupService.getAllGroups().subscribe({
       next: data => {
         this.groups = data;
-        this.setSelectedGroup(this.students!);
       }, error(e) {
         console.log(e)
       }
@@ -54,19 +58,12 @@ export class StudentsListComponent implements OnInit {
   }
 
   updateStudent(id: number) {
-    let name = document.getElementById("name" + id) as HTMLInputElement;
-    let birthdate = document.getElementById("date" + id) as HTMLInputElement;
-    let num = document.getElementById("number" + id) as HTMLInputElement;
-    let group = document.getElementById("group" + id) as HTMLInputElement;
-    let group_id = this.getSelectedGroup(group.value);
+    this.created_student.name = (document.getElementById("name" + id) as HTMLInputElement).value;
+    this.created_student.birthdate = new Date((document.getElementById("date" + id) as HTMLInputElement).value);
+    this.created_student.number = Number((document.getElementById("number" + id) as HTMLInputElement).value);
+    this.created_student.group_id = Number((document.getElementById("group" + id) as HTMLInputElement).value);
 
-    const data = {
-      name: name.value,
-      number: Number(num.value),
-      birthdate: new Date(birthdate.value),
-    };
-
-    this.groupService.updateStudent(group_id!, id, data).subscribe({
+    this.groupService.updateStudent(this.created_student.group_id!, id, this.created_student).subscribe({
       next: () => {
         this.getStudents();
         confirm('Редактирование успешно')
@@ -90,19 +87,7 @@ export class StudentsListComponent implements OnInit {
   }
 
   createStudent() {
-    let name = document.getElementById("name") as HTMLInputElement;
-    let birthdate = document.getElementById("date") as HTMLInputElement;
-    let num = document.getElementById("number") as HTMLInputElement;
-    let group = document.getElementById("group") as HTMLInputElement;
-    let group_id = this.getSelectedGroup(group.value);
-
-    const data = {
-      name: name.value,
-      number: Number(num.value),
-      birthdate: new Date(birthdate.value)
-    }
-
-    this.groupService.createStudent(group_id!, data).subscribe({
+    this.groupService.createStudent(this.created_student.group_id!, this.created_student).subscribe({
       next: () => {
         this.getStudents();
       },
@@ -123,17 +108,16 @@ export class StudentsListComponent implements OnInit {
         console.log(e);
       }
     });
-    this.setSelectedGroup(this.students!);
   }
 
   enableEdit(id: number) {
-    this.enable_disable(id, false);
+    this.toggle_edit(id, false);
     if (this.prev_id != 0)
-      this.enable_disable(this.prev_id, true);
+      this.toggle_edit(this.prev_id, true);
     this.prev_id = id;
   }
 
-  enable_disable(id: number, flag: boolean) {
+  toggle_edit(id: number, flag: boolean) {
     let name = document.getElementById("name" + id) as HTMLInputElement;
     let birthdate = document.getElementById("date" + id) as HTMLInputElement;
     let num = document.getElementById("number" + id) as HTMLInputElement;
@@ -149,25 +133,14 @@ export class StudentsListComponent implements OnInit {
     group.disabled = flag;
   }
 
-  private setSelectedGroup(students: Student[]) {
-    for (var i in students) {
-      let group_id = students[i].group_id!;
-      if (group_id != 0) {
-        students[i].selectedGroup = this.groups.find(function (item) {
-          return item.id == group_id;
-        })!;
-      }
-    }
-  }
-
-  private getSelectedGroup(selector: string) {
-    let group = this.groups.find(function (item) {
-      return item.name == selector;
-    })!;
-    return group.id;
-  }
-
   reset() {
     this.getStudents()
+  }
+
+  getGroupName(group_id: number) {
+    let group = this.groups.find(function (item) {
+      return item.id == group_id;
+    })!;
+    return group.name;
   }
 }

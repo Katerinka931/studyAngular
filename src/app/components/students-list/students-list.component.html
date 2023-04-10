@@ -22,11 +22,11 @@
 <br/>
 <div>
   <h2 class="text-center">Создайте студента</h2>
-  <input class="item" type="text" id="name" placeholder="Имя"/>
-  <input class="item" type="date" id="date"/>
-  <input class="item" type="text" id="number" placeholder="Номер"/>
-  <select class="item" id="group" [value]="">
-    <option *ngFor="let type of groups" [value]="type.name">
+  <input class="item" type="text" [(ngModel)]="created_student.name" placeholder="Имя"/>
+  <input class="item" type="date" [(ngModel)]="created_student.birthdate"/>
+  <input class="item" type="text" [(ngModel)]="created_student.number" placeholder="Номер"/>
+  <select class="item" id="group" [(ngModel)]="created_student.group_id" [value]="">
+    <option *ngFor="let type of groups" [value]="type.id">
       {{ type.name }}
     </option>
   </select>
@@ -41,9 +41,9 @@
     <input class="item" type="text" id="name{{student.id}}" value="{{student.name}}" disabled/>
     <input class="item" type="date" id="date{{student.id}}" value="{{student.birthdate | date:'yyyy-MM-dd'}}" disabled/>
     <input class="item" type="text" id="number{{student.id}}" value="{{student.number}}" disabled/>
-    <select class="item" id="group{{student.id}}" disabled [value]="student.selectedGroup!.name">
+    <select class="item" id="group{{student.id}}" disabled [value]="getGroupName(student.group_id!)">
       <option *ngFor="let type of groups"
-              [value]="type.name" [selected]="type.name == student.selectedGroup!.name">
+              [value]="type.id" [selected]="type.id == student.group_id">
         {{ type.name }}
       </option>
     </select>

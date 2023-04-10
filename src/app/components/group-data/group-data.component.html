@@ -1,17 +1,19 @@
-<br/>
-<div style="margin-bottom: 50px;">
-  <h2 class="text-center">Группа {{group.name}}</h2> <br/>
-  <input style="width: 90%; min-height: 40px; margin-left: 1%" type="text" id="group_name" value="{{group.name}}"/>
-  <button class="btn btn-outline-success" style="float: right; margin-left: 1%"
-          (click)="updateGroup(group.id!)">
-    💾
-  </button>
-</div>
+<div *ngIf="group">
+  <br/>
+  <div style="margin-bottom: 50px;">
+    <h2 class="text-center">Группа {{group.name}}</h2> <br/>
+    <input style="width: 90%; min-height: 40px; margin-left: 1%" type="text" [(ngModel)]="group.name"
+           value="{{group.name}}"/>
+    <button class="btn btn-outline-success" style="float: right; margin-left: 1%"
+            (click)="updateGroup(group.id!)">
+      💾
+    </button>
+  </div>
 
-<h2 class="text-center">Студенты</h2>
-<br/>
-<div *ngIf="isStudents; else noStudents">
-  <div *ngFor="let student of group.students; let i = index" style="margin-bottom: 10px">
+  <h2 class="text-center">Студенты</h2>
+  <br/>
+  <div *ngIf="isStudents; else noStudents">
+    <div *ngFor="let student of group.students; let i = index" style="margin-bottom: 10px">
       <div class="list-group-item list-item">
         <div style="margin: 10px 10px" class="row align-items-start">
           <div class="col">
@@ -25,18 +27,9 @@
           </div>
         </div>
       </div>
+    </div>
   </div>
+  <ng-template #noStudents>
+    <h5>Студентов в группе нет, создайте первого студента!</h5>
+  </ng-template>
 </div>
-<ng-template #noStudents>
-  <h5>Студентов в группе нет, создайте первого студента!</h5>
-</ng-template>
-<!--<br/>-->
-<!--<div>-->
-<!--  <h2 class="text-center" style="margin-top: 150px">Создайте студента</h2>-->
-<!--  <input class="item" type="text" id="name" placeholder="Имя"/>-->
-<!--  <input class="item" type="date" id="date"/>-->
-<!--  <input class="item" type="text" id="number" placeholder="Номер"/>-->
-<!--  <button class="btn btn-outline-success" style="float: right; margin-left: 1%" (click)="createStudent()"> +-->
-<!--  </button>-->
-<!--</div>-->
-

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupServiceService} from "../../services/group-service/group-service.service";
 import {Router} from "@angular/router";
-import {Group} from "../../models/group/group";
+import {Group} from "../../models/Group";
 
 @Component({
   selector: 'app-groups-list',
@@ -36,11 +36,7 @@ export class GroupsListComponent implements OnInit {
   }
 
   createGroup() {
-    let name = document.getElementById("name") as HTMLInputElement;
-    const data = {
-      name: name.value.toLowerCase()
-    };
-    this.groupService.createGroup(data).subscribe({
+    this.groupService.createGroup(this.group).subscribe({
       next: () => {
         this.retrieve();
       },

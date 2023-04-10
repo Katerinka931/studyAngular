@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GroupServiceService} from "../../services/group-service/group-service.service";
-import {Group} from "../../models/group/group";
-import {Student} from "../../models/student/student";
+import {Student} from "../../models/Student";
+import {Group} from "../../models/Group";
 
 @Component({
   selector: 'app-group-data',
@@ -37,11 +37,8 @@ export class GroupDataComponent implements OnInit {
   }
 
   updateGroup(id: number) {
-    let name = document.getElementById("group_name") as HTMLInputElement;
-    const data = {
-      name: name.value
-    }
-    this.groupService.updateGroup(id, data).subscribe({
+
+    this.groupService.updateGroup(id, this.group).subscribe({
       next: (data) => {
         this.group = data;
         confirm('Сохранение успешно')
