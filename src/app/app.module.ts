@@ -7,22 +7,34 @@ import { StudentsListComponent } from './components/students-list/students-list.
 import { GroupsListComponent } from './components/groups-list/groups-list.component';
 import { GroupDataComponent } from './components/group-data/group-data.component';
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { LoginComponent } from './components/login/login.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import {AuthGuard} from "./guards/auth.guard";
+import {errorInterceptorProviders} from "./helpers/http-error.interceptor";
+import {authInterceptorProviders} from "./helpers/basic-auth.interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentsListComponent,
     GroupsListComponent,
-    GroupDataComponent
+    GroupDataComponent,
+    LoginComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    authInterceptorProviders,
+    errorInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

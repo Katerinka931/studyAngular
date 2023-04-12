@@ -3,6 +3,7 @@ import {StudentServiceService} from "../../services/student-service/student-serv
 import {GroupServiceService} from "../../services/group-service/group-service.service";
 import {Student} from "../../models/Student";
 import {Group} from "../../models/Group";
+import {AuthService} from "../../services/auth-service/auth.service";
 
 @Component({
   selector: 'app-students-list',
@@ -10,25 +11,24 @@ import {Group} from "../../models/Group";
   styleUrls: ['./students-list.component.css']
 })
 export class StudentsListComponent implements OnInit {
+  role = '';
 
   students?: Student[];
   groups: Group[] = [];
 
-  created_student: Student = {
-    name: '',
-    birthdate: new Date(),
-    number: 0,
-    group_id: 0
-  };
+  created_student = {} as Student;
+  edited_student = {} as Student;
 
   prev_id: number = 0;
   isStudents: boolean = false;
 
-  constructor(private studentService: StudentServiceService, private groupService: GroupServiceService) {
+  constructor(private studentService: StudentServiceService, private groupService: GroupServiceService,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this.reload()
+    this.reload();
+    this.role = this.authService.userValue!.role!;
   }
 
   reload() {
@@ -41,7 +41,7 @@ export class StudentsListComponent implements OnInit {
       next: (data) => {
         this.students = data;
         this.isStudents = this.students.length != 0
-      }, error: (e) => {
+      }, error: () => {
       }
     });
   }
@@ -50,18 +50,18 @@ export class StudentsListComponent implements OnInit {
     this.groupService.getAllGroups().subscribe({
       next: data => {
         this.groups = data;
-      }, error(e) {
+      }, error() {
       }
     });
   }
 
   updateStudent(id: number) {
-    this.created_student.name = (document.getElementById("name" + id) as HTMLInputElement).value;
-    this.created_student.birthdate = new Date((document.getElementById("date" + id) as HTMLInputElement).value);
-    this.created_student.number = Number((document.getElementById("number" + id) as HTMLInputElement).value);
-    this.created_student.group_id = Number((document.getElementById("group" + id) as HTMLInputElement).value);
+    this.edited_student.name = (document.getElementById("name" + id) as HTMLInputElement).value;
+    this.edited_student.birthdate = new Date((document.getElementById("date" + id) as HTMLInputElement).value);
+    this.edited_student.number = Number((document.getElementById("number" + id) as HTMLInputElement).value);
+    this.edited_student.group_id = Number((document.getElementById("group" + id) as HTMLInputElement).value);
 
-    this.groupService.updateStudent(this.created_student.group_id!, id, this.created_student).subscribe({
+    this.groupService.updateStudent(this.edited_student.group_id!, id, this.edited_student).subscribe({
       next: () => {
         this.getStudents();
         confirm('Редактирование успешно')
@@ -102,7 +102,7 @@ export class StudentsListComponent implements OnInit {
       next: (data) => {
         this.students = data;
         this.isStudents = this.students.length != 0
-      }, error: (e) => {
+      }, error: () => {
       }
     });
   }

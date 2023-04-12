@@ -39,7 +39,7 @@ export class GroupServiceService {
     return this.http.put(`${this.baseUrl}/${group_id}/students/${id}`, data);
   }
 
-  createStudent(group_id: number , data: Student) {
+  createStudent(group_id: number, data: Student) {
     return this.http.post(`${this.baseUrl}/${group_id}/students`, data);
   }
 }

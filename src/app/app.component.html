@@ -1,15 +1,20 @@
-<div>
+<div *ngIf="showNav">
   <nav class="navbar navbar-expand navbar-dark bg-success">
     <div class="navbar-nav mr-auto">
       <li class="nav-item" [routerLinkActive]="['active']">
-        <a routerLink="api/students" class="nav-link">Студенты</a>
-      </li>
-      <li class="nav-item" [routerLinkActive]="['active']">
         <a routerLink="api/groups" class="nav-link">Группы</a>
+      </li>
+      <div *ngIf="role == 'ROLE_ADMIN'">
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a routerLink="api/students" class="nav-link">Студенты</a>
+        </li>
+      </div>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a (click)="logout()" class="nav-link">Выход</a>
       </li>
     </div>
   </nav>
 </div>
 <div class="mt-3 container">
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

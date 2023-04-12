@@ -21,6 +21,12 @@ export class GroupsListComponent implements OnInit {
   }
 
   retrieve() {
+    // this.groupService.getAllGroups().pipe(first()).subscribe(data => {
+    //   console.log('try to get groups')
+    //   this.groups = data;
+    //   this.isGroups = this.groups.length != 0;
+    // });
+
     this.groupService.getAllGroups().subscribe({
       next: data => {
         this.groups = data;
@@ -52,7 +58,7 @@ export class GroupsListComponent implements OnInit {
         this.retrieve();
         confirm('Группа удалена')
       },
-      error: (e) => {
+      error: () => {
         confirm('Удаление не удалось')
       }
     });
