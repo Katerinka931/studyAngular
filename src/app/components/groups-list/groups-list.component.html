@@ -10,15 +10,27 @@
   <h2 class="text-center">Список групп</h2>
   <br/>
   <div *ngIf="isGroups; else noGroups">
-    <div *ngFor="let group of groups; let i = index" style="margin-bottom: 10px" >
-      <div class="list-group-item list-item zoom" (click)="openGroup(group.id!)">
-        <div style="margin: 10px 10px">
-          <label style="margin-top: 5px">{{group.name}}</label>
-          <button *ngIf="user.role == 'ROLE_ADMIN'" class="btn btn-danger" style="min-height: 40px; float: right; margin-bottom: inherit" (click)="deleteGroup(group.id!)">
+    <div *ngFor="let group of groups; let i = index" style="margin-bottom: 10px;">
+      <div *ngIf="user.role == 'ROLE_ADMIN'; else userTemplate">
+        <div class="list-group-item list-item zoom" (click)="openGroup(group.id!)">
+          <div style="margin: 10px 10px">
+            {{group.name}}
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-danger" style="min-height: 40px; float: left; margin-left: 25px"
+                  (click)="deleteGroup(group.id!)">
             Удалить группу
           </button>
         </div>
       </div>
+      <ng-template #userTemplate>
+        <div class="list-group-item user-list-item zoom" (click)="openGroup(group.id!)">
+          <div style="margin: 10px 10px">
+            {{group.name}}
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
   <ng-template #noGroups>

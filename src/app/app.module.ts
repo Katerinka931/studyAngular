@@ -12,8 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import {AuthGuard} from "./guards/auth.guard";
 import { RegisterComponent } from './components/register/register.component';
-import {authInterceptorProviders} from "./helpers/basic-auth.interceptor";
-import {errorInterceptorProviders} from "./helpers/http-error.interceptor";
+import {authInterceptorProvider} from "./helpers/basic-auth.interceptor";
+import {errorInterceptorProvider} from "./helpers/http-error.interceptor";
 
 @NgModule({
   declarations: [
@@ -34,8 +34,8 @@ import {errorInterceptorProviders} from "./helpers/http-error.interceptor";
   ],
   providers: [
     AuthGuard,
-    authInterceptorProviders,
-    errorInterceptorProviders
+    authInterceptorProvider,
+    errorInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })

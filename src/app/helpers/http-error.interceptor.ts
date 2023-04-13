@@ -20,6 +20,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 }
 
-export const errorInterceptorProviders = [
+export const errorInterceptorProvider = [
   {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
 ];
