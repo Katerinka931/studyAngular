@@ -11,8 +11,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import {AuthGuard} from "./guards/auth.guard";
-import {errorInterceptorProviders} from "./helpers/http-error.interceptor";
+import { RegisterComponent } from './components/register/register.component';
 import {authInterceptorProviders} from "./helpers/basic-auth.interceptor";
+import {errorInterceptorProviders} from "./helpers/http-error.interceptor";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {authInterceptorProviders} from "./helpers/basic-auth.interceptor";
     GroupsListComponent,
     GroupDataComponent,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -15,10 +15,14 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     const isApiUrl = request.url.startsWith(environment.apiUrl);
     if (isLoggedIn && isApiUrl) {
       request = request.clone({
-        setHeaders: {
-          // 'Access-Control-Allow-Origin': '*',
-          Authorization: `Basic ${user.authdata}`
-        }
+        headers: request.headers.set(
+          'Authorization',
+          `Basic ${user.authdata}`
+        )
+        // setHeaders: {
+        //   'Access-Control-Allow-Origin': '*',
+        //   Authorization: `Basic ${user.authdata}`
+        // }
       });
     }
     return next.handle(request);

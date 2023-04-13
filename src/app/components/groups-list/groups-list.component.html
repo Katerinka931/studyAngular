@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="user.role == 'ROLE_ADMIN'">
   <h2 class="text-center" style="margin-top: 50px">Создайте группу</h2>
   <br/>
   <input class="create-group" type="text" [(ngModel)]="group.name" placeholder="Номер группы"/>
@@ -13,13 +13,11 @@
     <div *ngFor="let group of groups; let i = index" style="margin-bottom: 10px" >
       <div class="list-group-item list-item zoom" (click)="openGroup(group.id!)">
         <div style="margin: 10px 10px">
-          {{group.name}}
+          <label style="margin-top: 5px">{{group.name}}</label>
+          <button *ngIf="user.role == 'ROLE_ADMIN'" class="btn btn-danger" style="min-height: 40px; float: right; margin-bottom: inherit" (click)="deleteGroup(group.id!)">
+            Удалить группу
+          </button>
         </div>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-danger" style="min-height: 40px; float: left; margin-left: 25px" (click)="deleteGroup(group.id!)">
-          Удалить группу
-        </button>
       </div>
     </div>
   </div>

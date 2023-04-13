@@ -1,7 +1,7 @@
 <div class="col-md-6 offset-md-3 mt-5">
   <div class="card" style="margin-top: 30%">
     <div class="card-body" style="border-radius: 7px; background: rgba(144,238,144,0.23)">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label class="form-label">Логин</label>
           <input type="text" style="background: #e5e5e5" formControlName="username" class="form-control"/>
@@ -10,16 +10,21 @@
           <label class="form-label">Пароль</label>
           <input type="password" style="background: #e5e5e5" formControlName="password" class="form-control"/>
         </div>
+        <div class="mb-3">
+          <label class="form-label">Повторите пароль</label>
+          <input type="password" style="background: #e5e5e5" formControlName="password_repeat" class="form-control"/>
+        </div>
         <div class="mb-3 text-center">
           <button [disabled]="loading" class="btn btn-primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
-            Вход
+            Зарегистрироваться
           </button>
         </div>
         <div class="mb-3 text-center">
-          <a [routerLink]="['/api/auth/register']">Регистрация</a>
+          <a routerLink="../login">Вход</a>
         </div>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        <div *ngIf="success" class="alert alert-success  mt-3 mb-0">{{success}}</div>
       </form>
     </div>
   </div>

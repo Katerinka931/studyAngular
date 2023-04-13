@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {GroupServiceService} from "../../services/group-service/group-service.service";
 import {Router} from "@angular/router";
 import {Group} from "../../models/Group";
+import {AuthService} from "../../services/auth-service/auth.service";
+import {User} from "../../models/User";
 
 @Component({
   selector: 'app-groups-list',
@@ -12,21 +14,17 @@ export class GroupsListComponent implements OnInit {
   group: Group = {};
   groups: Group[] = [];
   isGroups: boolean = false;
+  user = {} as User;
 
-  constructor(private groupService: GroupServiceService, private router: Router) {
+  constructor(private groupService: GroupServiceService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.retrieve();
+    this.user = this.authService.userValue!;
   }
 
   retrieve() {
-    // this.groupService.getAllGroups().pipe(first()).subscribe(data => {
-    //   console.log('try to get groups')
-    //   this.groups = data;
-    //   this.isGroups = this.groups.length != 0;
-    // });
-
     this.groupService.getAllGroups().subscribe({
       next: data => {
         this.groups = data;
@@ -38,7 +36,7 @@ export class GroupsListComponent implements OnInit {
   }
 
   openGroup(id: number) {
-    this.router.navigate([`/api/groups/${id}`]);
+    return this.router.navigate([`/api/groups/${id}`]);
   }
 
   createGroup() {

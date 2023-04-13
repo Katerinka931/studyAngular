@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   loading = false;
-  submitted = false;
   error = '';
 
   constructor(
@@ -30,16 +29,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get formData() { return this.loginForm.controls; }
 
   onSubmit() {
-    this.submitted = true;
-
     if (this.loginForm.invalid) {
       return;
     }
@@ -47,15 +43,14 @@ export class LoginComponent implements OnInit {
     this.error = '';
     this.loading = true;
 
-    this.authenticationService.login(this.f['username'].value, this.f['password'].value)
+    this.authenticationService.login(this.formData['username'].value, this.formData['password'].value)
       .pipe(first())
       .subscribe({
         next: () => {
           this.router.navigate(['/api/groups']);
         },
         error: error => {
-          console.log (error);
-          this.error = error.status;
+          this.error = "Неверно введены учетные данные";
           this.loading = false;
         }
       });
